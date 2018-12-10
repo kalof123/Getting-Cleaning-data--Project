@@ -22,19 +22,19 @@ features <- read.table("UCI HAR Dataset/features.txt")
 features[,2] <- as.character(features[,2])
 
 #Filter features by matching "mean" and "std" word
-featuresWanted <- grep(".*mean.*|.*std.*", features[,2])
+features_mean_std <- grep(".*mean.*|.*std.*", features[,2])
 
-featuresWanted.names <- features[featuresWanted,2]
+features_mean_std.names <- features[features_mean_std,2]
 
-featuresWanted.names = gsub('-mean', 'Mean', featuresWanted.names)
+features_mean_std.names = gsub('-mean', 'Mean', features_mean_std.names)
 
-featuresWanted.names = gsub('-std', 'Std', featuresWanted.names)
+features_mean_std.names = gsub('-std', 'Std', features_mean_std.names)
 
-featuresWanted.names <- gsub('[-()]', '', featuresWanted.names)
+features_mean_std.names <- gsub('[-()]', '', features_mean_std.names)
 
 #train data
 
-train <- read.table("UCI HAR Dataset/train/X_train.txt")[featuresWanted]
+train <- read.table("UCI HAR Dataset/train/X_train.txt")[features_mean_std]
 
 trainActivities <- read.table("UCI HAR Dataset/train/Y_train.txt")
 
@@ -44,7 +44,7 @@ train <- cbind(trainSubjects, trainActivities, train)
 
 
 #test data
-test <- read.table("UCI HAR Dataset/test/X_test.txt")[featuresWanted]
+test <- read.table("UCI HAR Dataset/test/X_test.txt")[features_mean_std]
 
 testActivities <- read.table("UCI HAR Dataset/test/Y_test.txt")
 
@@ -53,18 +53,18 @@ testSubjects <- read.table("UCI HAR Dataset/test/subject_test.txt")
 test <- cbind(testSubjects, testActivities, test)
 
 #merging train and test data
-allData <- rbind(train, test)
-colnames(allData) <- c("subject", "activity", featuresWanted.names)
+mergedData <- rbind(train, test)
+colnames(mergedData) <- c("subject", "activity", features_mean_std.names)
 
 # turn activities & subjects into factors
-allData$activity <- factor(allData$activity, levels = activityLabels[,1], labels = activityLabels[,2])
+mergedData$activity <- factor(mergedData$activity, levels = activityLabels[,1], labels = activityLabels[,2])
 
-allData$subject <- as.factor(allData$subject)
+mergedData$subject <- as.factor(mergedData$subject)
 
-allData.melted <- melt(allData, id = c("subject", "activity"))
+mergedData.melted <- melt(mergedData, id = c("subject", "activity"))
 
-allData.mean <- dcast(allData.melted, subject + activity ~ variable, mean)
+mergedData.mean <- dcast(mergedData.melted, subject + activity ~ variable, mean)
 
 
 
-write.table(allData.mean, "week4data.txt", row.names = FALSE, quote = FALSE)
+write.table(mergedData.mean, "week4data.txt", row.names = FALSE, quote = FALSE)
