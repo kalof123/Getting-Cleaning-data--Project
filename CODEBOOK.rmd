@@ -28,9 +28,13 @@ This code book summarizes the resulting data fields in `week4data.txt`.
 
 * `activity` - The type of activity performed when the corresponding measurements were taken
 
+## r script variables
+* activityLabels -- labels of the activities ( walking, walking_upstairs,walking_downstairs etc)
+* features - complete features list
+* featuresWanted- filtered features ( only mean and std)
+* allData -- train and test data merged into this dataset
 
-
-## Measurements
+## Measurements in the final tidy data set
 
 * `tBodyAccMeanX`
 
