@@ -32,7 +32,9 @@ This code book summarizes the resulting data fields in `week4data.txt`.
 * activityLabels -- labels of the activities ( walking, walking_upstairs,walking_downstairs etc)
 * features - complete features list
 * features_mean_std- filtered features ( only mean and std)
-* allData -- train and test data merged into this dataset
+* mergedData -- train and test data merged into this dataset
+* mergedData.melted- melted megerdData 
+* mergedData.mean - mean dataset of the melted mergedData ( activity and subject pair)
 
 ## Measurements in the final tidy data set
 
